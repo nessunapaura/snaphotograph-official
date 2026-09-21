@@ -53,9 +53,11 @@
             font-size: 0.9rem; 
             text-transform: uppercase; 
             letter-spacing: 1px; 
+            cursor: pointer;
+            transition: color 0.2s ease;
         }
         
-        nav ul li a.active { 
+        nav ul li a:hover, nav ul li a.active { 
             color: #39ff14; 
         }
 
@@ -100,8 +102,21 @@
             margin-bottom: 50px; 
         }
 
-        /* STRUTTURA CON ANIMAZIONE FLUTTUANTE CONTINUA */
-        .exhibition-hero { 
+        /* STRUTTURA DELLE SCHEDE DINAMICHE */
+        .page-content {
+            display: none;
+            width: 100%;
+            max-width: 900px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-content.active {
+            display: flex;
+        }
+
+        /* ANIMAZIONI DI FLUTTUAZIONE DELLE OPERE */
+        .exhibition-hero, .exhibition-center { 
             width: 100%; 
             max-width: 900px; 
             margin-bottom: 45px; 
@@ -113,13 +128,26 @@
             width: 100%; 
             height: auto; 
             display: block; 
-            animation: muoviContinuo 3s ease-in-out infinite alternate; 
+            animation: muoviTestata 3s ease-in-out infinite alternate; 
+        }
+
+        .exhibition-center img { 
+            width: 100%; 
+            height: auto; 
+            display: block; 
+            max-width: 500px; /* Dimensione controllata per l'opera centrale */
+            animation: muoviCentrale 3.5s ease-in-out infinite alternate; /* Ritmo leggermente sfasato per non muoversi in sincrono */
         }
         
-        /* MOTORE DEL MOVIMENTO CONTINUO */
-        @keyframes muoviContinuo {
+        /* MOTORI DEL MOVIMENTO CONTINUO */
+        @keyframes muoviTestata {
             0% { transform: translateY(0px); }
-            100% { transform: translateY(-30px); }
+            100% { transform: translateY(-25px); }
+        }
+
+        @keyframes muoviCentrale {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(20px); }
         }
 
         /* DATI CATALOGO */
@@ -148,16 +176,35 @@
             color: #222222; 
             font-weight: 300; 
         }
+
+        /* TESTI MANIFESTO */
+        .manifesto-text {
+            color: #444444;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+            max-width: 750px;
+        }
+
+        .manifesto-text p {
+            margin-bottom: 25px;
+        }
+
+        .highlight {
+            color: #39ff14;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
+    <!-- NAVIGAZIONE INDEX INTERATTIVA -->
     <nav>
         <div class="brand">MENU // INDEX</div>
         <ul>
-            <li><a class="active">Banality (2027)</a></li>
-            <li><a>Manifesto</a></li>
-            <li><a>Nessuna Paura</a></li>
+            <li><a onclick="switchPage('banality')" id="link-banality" class="active">Banality (2027)</a></li>
+            <li><a onclick="switchPage('manifesto')" id="link-manifesto">Manifesto</a></li>
+            <li><a onclick="switchPage('nessuna-paura')" id="link-nessuna-paura">Nessuna Paura</a></li>
         </ul>
     </nav>
 
@@ -168,18 +215,57 @@
             <hr>
         </div>
 
-        <!-- L'OPERA CON IL TUO FILE TESTATA.SVG AGGANCIATO -->
-        <div class="exhibition-hero">
-            <img src="testata.svg" alt="SNAPHOTOGRAPH Art">
+        <!-- SCHEDA 1: BANALITY -->
+        <div id="page-banality" class="page-content active">
+            <!-- Prima Opera (Testata) -->
+            <div class="exhibition-hero">
+                <img src="testata.svg" alt="SNAPHOTOGRAPH Testata Art">
+            </div>
+
+            <!-- Dati di Catalogo -->
+            <div class="meta">
+                <div class="row"><span class="label">MOSTRA:</span><span class="value">BANALITY, art is a banana bla...bla..blaaaa</span></div>
+                <div class="row"><span class="label">ARTISTA:</span><span class="value">Luca Simonetti</span></div>
+                <div class="row"><span class="label">ATTO I:</span><span class="value">DUCHAMP'S URINAL (Non-Fungible Reality)</span></div>
+                <div class="row"><span class="label">SPAZIO:</span><span class="value">Galleria SNAPHOTOGRAPH c/o Club Tamerò, Firenze</span></div>
+            </div>
+
+            <!-- Seconda Opera (Opera Centrale Sotto le Diciture) -->
+            <div class="exhibition-center">
+                <img src="opera-centrale.svg" alt="SNAPHOTOGRAPH Opera Centrale">
+            </div>
         </div>
 
-        <div class="meta">
-            <div class="row"><span class="label">MOSTRA:</span><span class="value">BANALITY, art is a banana bla...bla..blaaaa</span></div>
-            <div class="row"><span class="label">ARTISTA:</span><span class="value">Luca Simonetti</span></div>
-            <div class="row"><span class="label">ATTO I:</span><span class="value">DUCHAMP'S URINAL (Non-Fungible Reality)</span></div>
-            <div class="row"><span class="label">SPAZIO:</span><span class="value">Galleria SNAPHOTOGRAPH c/o Club Tamerò, Firenze</span></div>
+        <!-- SCHEDA 2: MANIFESTO -->
+        <div id="page-manifesto" class="page-content">
+            <div class="manifesto-text">
+                <p>La galleria <span class="highlight">SNAPHOTOGRAPH</span> non produce bellezza. Produce evidenza. In un mercato dell'arte ridotto a un ufficio di marketing per miliardari annoiati, l'autenticità è diventata la menzogna più costosa del mondo.</p>
+                <p>Noi rivendichiamo il diritto al vuoto, all'errore calcolato e alla <span class="highlight">BANALITÀ ASSOLUTA</span>. Se un algoritmo può curare una mostra e una buccia di banana può valere milioni, allora tutto è codice, tutto è finzione, tutto è <span class="highlight">NON-FUNGIBLE REALITY</span>.</p>
+                <p>Non cercate un significato profondo dietro questa linea verde acido. C'è solo una macchina che parla a un'altra macchina. <span class="highlight">bla... bla... bla... AAAA</span></p>
+            </div>
+        </div>
+
+        <!-- SCHEDA 3: NESSUNA PAURA -->
+        <div id="page-nessuna-paura" class="page-content">
+            <div class="meta">
+                <div class="row"><span class="label">STATUS:</span><span class="value">ATTO II — IN FASE DI PROGETTAZIONE CONCETTUALE.</span></div>
+            </div>
         </div>
     </main>
+
+    <!-- MOTORE DI SPOSTAMENTO DELLE PAGINE -->
+    <script>
+        function switchPage(pageId) {
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(page => page.classList.remove('active'));
+
+            const links = document.querySelectorAll('nav ul li a');
+            links.forEach(link => link.classList.remove('active'));
+
+            document.getElementById('page-' + pageId).classList.add('active');
+            document.getElementById('link-' + pageId).classList.add('active');
+        }
+    </script>
 
 </body>
 </html>
