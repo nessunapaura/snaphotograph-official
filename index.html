@@ -237,3 +237,11 @@
 <div class="exhibition-hero">
     <img src="opera.svg" alt="SNAPHOTOGRAPH Vector Art" style="max-width: 450px; border: none;">
 </div>
+/* FORZATURA VISIBILITÀ DEL FILE VETTORIALE */
+.exhibition-hero svg, .exhibition-hero img[src$=".svg"] {
+    max-width: 450px !important;
+    height: auto !important;
+    stroke: #39ff14 !important; /* Costringe le linee a diventare verde acido */
+    fill: none !important;
+    filter: drop-shadow(0px 0px 1px #39ff14) contrast(200%);
+}
